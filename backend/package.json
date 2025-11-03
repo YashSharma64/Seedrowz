@@ -1,0 +1,27 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prisma:format": "dotenv -e prisma/.env -- prisma format --schema prisma/schema.prisma",
+    "prisma:generate": "dotenv -e prisma/.env -- prisma generate --schema prisma/schema.prisma",
+    "prisma:studio": "dotenv -e prisma/.env -- prisma studio --schema prisma/schema.prisma"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@prisma/client": "^6.18.0",
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.3",
+    "express": "^5.1.0",
+    "mongoose": "^8.19.2"
+  },
+  "description": "",
+  "devDependencies": {
+    "dotenv-cli": "^11.0.0",
+    "nodemon": "^3.1.10",
+    "prisma": "^6.18.0"
+  }
+}
