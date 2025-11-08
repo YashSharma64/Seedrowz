@@ -23,13 +23,13 @@ It delivers an instant **Pass / Needs Work / Risky** verdict, generates a **90-d
 
 | Layer | Technologies |
 |-------|---------------|
-| **Frontend** | Next.js, TailwindCSS, ShadCN/UI, Framer Motion |
+| **Frontend** | React.js, TailwindCSS, ShadCN/UI, |
 | **AI Engine** | Google Gemini API |
 | **Backend** | Node.js / Express.js |
-| **Database** | PostgreSQL (via Supabase) |
+| **Database** | MySQL (via Prisma ORM) |
 | **State Management** | React Query, Zustand |
-| **Auth** | Clerk / Supabase Auth |
-| **Hosting** | Vercel (Frontend), Render (Backend), Supabase (DB) |
+| **Auth** | Oauth / JWT Auth |
+| **Hosting** | Vercel (Frontend), Render (Backend) |
 
 ---
 
