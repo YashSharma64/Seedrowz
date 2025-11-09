@@ -1,0 +1,105 @@
+import { useNavigate } from 'react-router-dom';
+
+export default function Home() {
+  const navigate = useNavigate();
+
+  return (
+    <div className="min-h-screen bg-white flex flex-col justify-center items-center w-full">
+      {/* Navbar */}
+      <nav className="flex items-center justify-between px-8 py-5 max-w-7xl mx-auto w-full border-b border-gray-200 fixed top-3 left-0 right-0 z-50 bg-white">
+        {/* Logo */}
+        <div className="text-2xl font-bold text-[#8B4513] cursor-pointer">
+          Seedrowz
+        </div>
+        
+        {/* Navigation Links */}
+        <div className="flex items-center gap-12">
+          <a 
+            href="#top-startups" 
+            className="text-gray-700 hover:text-gray-900 text-base font-medium transition-colors"
+          >
+            Top Startups
+          </a>
+          <a 
+            href="#about" 
+            className="text-gray-700 hover:text-gray-900 text-base font-medium transition-colors"
+          >
+            About Us
+          </a>
+          
+          {/* Login/Signup Button */}
+          <button 
+            onClick={() => navigate('/login')}
+            className="flex items-center gap-2 bg-orange-500 hover:bg-orange-600 text-white px-5 py-2.5 rounded-lg text-base font-medium transition-colors shadow-md hover:shadow-lg ml-4"
+          >
+            <svg 
+              xmlns="http://www.w3.org/2000/svg" 
+              className="h-5 w-5" 
+              viewBox="0 0 24 24" 
+              fill="none" 
+              stroke="currentColor" 
+              strokeWidth="2" 
+              strokeLinecap="round" 
+              strokeLinejoin="round"
+            >
+              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+              <circle cx="12" cy="7" r="4" />
+            </svg>
+            Login/Signup
+          </button>
+        </div>
+      </nav>
+
+      {/* Hero Section */}
+      <section className="px-8 py-20 md:py-20 lg:py-24 max-w-7xl mx-auto">
+        <div className="max-w-5xl">
+          {/* Headline */}
+          <h1 className="text-5xl md:text-7xl lg:text-5xl font-normal text-gray-800 mb-4 leading-tight mt-20">
+            Hey Founders,
+          </h1>
+          
+          {/* Welcome Message with Brand Name */}
+          <div className="mb-10">
+            <div className="flex items-baseline gap-3 flex-nowrap">
+              <h2 className="text-6xl md:text-7xl lg:text-7xl font-normal text-gray-800 leading-tight whitespace-nowrap">
+                Welcome to
+              </h2>
+              <div className="relative inline-block">
+                <h3 className="text-9xl md:text-11xl lg:text-12xl ml-3 font-normal text-orange-500 leading-none whitespace-nowrap">
+                  Seedrowz
+                </h3>
+                <div className="flex items-center mt-3">
+                  <div className="h-2 md:h-1.6 bg-orange-500 w-[600px] max-w-[600px]"></div>
+                  
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          {/* Tagline 1 */}
+          <p className="text-center text-2xl md:text-3xl text-gray-700 mb-5 font-normal leading-relaxed max-w-4xl mx-auto">
+            AI that grades your startup idea before investors do.
+          </p>
+          
+          {/* Tagline 2 */}
+          <p className="text-center text-lg md:text-xl text-dark-blue-500 mb-14 font-normal leading-relaxed max-w-3xl mx-auto ">
+            Get an instant reality check, roadmap & investor recommendations powered by AI
+          </p>
+          
+          {/* CTA Button */}
+          <button className="mx-auto flex justify-center items-center bg-orange-500 hover:bg-white hover:text-orange-500 border border-orange-500 text-white px-10 py-5 rounded-4xl text-lg md:text-xl font-medium transition-colors shadow-lg hover:shadow-xl cursor-pointer ">
+            Get the Reality Check
+          </button>
+        </div>
+      </section>
+        
+
+      {/* How Seedrowz Works Section */}
+      <section className="px-8 py-20 max-w-7xl mx-auto">
+        <h2 className="text-5xl md:text-6xl font-normal text-gray-800">
+          How Seedrowz works?
+        </h2>
+      </section>
+    </div>
+  );
+}
