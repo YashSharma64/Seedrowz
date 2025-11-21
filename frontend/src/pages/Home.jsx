@@ -58,7 +58,7 @@ export default function Home() {
             Hey Founders,
           </h1>
           
-          {/* Welcome Message with Brand Name */}
+          {/* Welcome Message */}
           <div className="mb-10">
             <div className="flex items-baseline gap-3 flex-nowrap">
               <h2 className="text-6xl md:text-7xl lg:text-7xl font-normal text-gray-800 leading-tight whitespace-nowrap">
@@ -87,7 +87,10 @@ export default function Home() {
           </p>
           
           {/* CTA Button */}
-          <button className="mx-auto flex justify-center items-center bg-orange-500 hover:bg-white hover:text-orange-500 border border-orange-500 text-white px-10 py-5 rounded-4xl text-lg md:text-xl font-medium transition-colors shadow-lg hover:shadow-xl cursor-pointer ">
+          <button 
+            onClick={() => navigate('/dashboard')}
+            className="mx-auto flex justify-center items-center bg-orange-500 hover:bg-white hover:text-orange-500 border border-orange-500 text-white px-10 py-5 rounded-4xl text-lg md:text-xl font-medium transition-colors shadow-lg hover:shadow-xl cursor-pointer "
+          >
             Get the Reality Check
           </button>
         </div>

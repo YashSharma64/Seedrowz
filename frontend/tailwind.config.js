@@ -7,8 +7,11 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        'poppins': ['Poppins', 'sans-serif'],
-        'sans': ['Poppins', 'sans-serif'],
+        sans: ['Inter', 'Poppins', 'sans-serif'],       
+        heading: ['Playfair Display', 'serif'],       
+      },
+      colors: {
+        cream: '#F4EFEA', 
       },
       fontSize: {
         '10xl': ['10rem', { lineHeight: '1' }],
