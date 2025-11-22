@@ -40,3 +40,33 @@ model Startup {
   founder     User     @relation(fields: [founderId], references: [id])
   createdAt   DateTime @default(now())
 }
+
+model EvaluationResult {
+  id                Int      @id @default(autoincrement())
+  title              String
+  pitch              String
+  problem            String
+  solution           String
+  targetAudience     String
+  businessModel      String
+  competition        String?
+  experience         String?
+  education          String?
+  skills             String?
+  founderRole        String?
+  traction           String?
+  mvpReady           String?
+  vision             String?
+  feasibility        Int
+  marketPotential    Int
+  competitionScore   Int
+  scalability        Int
+  executionDifficulty Int
+  verdict            String
+  summary            String   @db.Text
+  nextSteps          String   @db.Text // JSON array stored as string
+  techStack          String?  @db.Text
+  fundingStage       String?
+  investorMatches    String?  @db.Text // JSON array stored as string
+  createdAt          DateTime @default(now())
+}

@@ -24,10 +24,10 @@ export default function Dashboard() {
   });
 
   const [showBusinessModelDropdown, setShowBusinessModelDropdown] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const businessModelOptions = ['B2B', 'B2C', 'SaaS', 'Marketplace', 'Subscription'];
   const dropdownRef = useRef(null);
   
-  // Refs for all input fields to enable Enter key navigation for making the user experience better 
   const inputRefs = {
     startupTitle: useRef(null),
     oneLinePitch: useRef(null),
@@ -47,7 +47,7 @@ export default function Dashboard() {
     vision2to5Years: useRef(null),
   };
 
-  // Order of input fields for navigation
+
   const inputOrder = [
     'startupTitle',
     'oneLinePitch',
@@ -105,10 +105,88 @@ export default function Dashboard() {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    
+    setIsLoading(true);
+    
+    try {
+      // Map form data to API request format
+      const requestBody = {
+        title: formData.startupTitle,
+        pitch: formData.oneLinePitch,
+        problem: formData.problemStatement,
+        solution: formData.proposedSolution,
+        marketSize: '', // Not in form, it can be added later if needed
+        targetAudience: formData.targetAudience,
+        businessModel: formData.businessModel,
+        competition: formData.competition,
+        experience: formData.experience,
+        education: formData.qualification,
+        skills: formData.skillsExpertise,
+        founderRole: formData.founderRole,
+        traction: formData.usersWaitlist,
+        mvpReady: formData.mvpPrototypeReady,
+        vision: formData.vision2to5Years,
+      };
 
-    console.log('Form submitted:', formData);
+      // Get API base URL from environment or use default
+      const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000';
+      
+      console.log('Submitting to:', `${API_BASE_URL}/api/evaluate-idea`);
+      console.log('Request body:', requestBody);
+      
+      const response = await fetch(`${API_BASE_URL}/api/evaluate-idea`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(requestBody),
+      });
+
+      console.log('Response status:', response.status);
+      console.log('Response ok:', response.ok);
+
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => ({ error: response.statusText }));
+        throw new Error(`API error: ${response.status} - ${errorData.error || response.statusText}`);
+      }
+
+      const data = await response.json();
+      console.log('API Response:', data);
+      
+      // Handle success response
+      if (data.success && data.resultId) {
+        // Store evaluation result in localStorage or state management
+        // Navigate to results page with resultId
+        navigate(`/results/${data.resultId}`, { 
+          state: { 
+            evaluation: data.evaluation,
+            resultId: data.resultId 
+          } 
+        });
+      } else {
+        throw new Error('Invalid response from server');
+      }
+      
+    } catch (error) {
+      console.error('Error submitting form:', error);
+      
+      // More detailed error message
+      let errorMessage = 'Failed to submit form. ';
+      
+      if (error.message.includes('Failed to fetch') || error.message.includes('NetworkError')) {
+        errorMessage += 'Cannot connect to the server. Please make sure the backend server is running on http://localhost:5000';
+      } else if (error.message.includes('API error')) {
+        errorMessage += error.message;
+      } else {
+        errorMessage += error.message;
+      }
+      
+      alert(errorMessage);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -186,6 +264,7 @@ export default function Dashboard() {
                 onChange={handleChange}
                 onKeyDown={(e) => handleKeyDown(e, 'startupTitle')}
                 placeholder="Your startup's name."
+                required
                 className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent text-gray-900 placeholder-gray-400"
               />
             </div>
@@ -203,6 +282,7 @@ export default function Dashboard() {
                 onChange={handleChange}
                 onKeyDown={(e) => handleKeyDown(e, 'oneLinePitch')}
                 placeholder="Summarize your idea in one sentence."
+                required
                 className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent text-gray-900 placeholder-gray-400"
               />
             </div>
@@ -227,6 +307,7 @@ export default function Dashboard() {
                 onKeyDown={(e) => handleKeyDown(e, 'problemStatement')}
                 placeholder="What exact problem are you solving? Why does it matter?"
                 rows="4"
+                required
                 className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent text-gray-900 placeholder-gray-400 resize-y"
               />
             </div>
@@ -244,6 +325,7 @@ export default function Dashboard() {
                 onKeyDown={(e) => handleKeyDown(e, 'proposedSolution')}
                 placeholder="How does your product solve the problem?"
                 rows="4"
+                required
                 className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent text-gray-900 placeholder-gray-400 resize-y"
               />
             </div>
@@ -268,6 +350,7 @@ export default function Dashboard() {
                 onChange={handleChange}
                 onKeyDown={(e) => handleKeyDown(e, 'targetAudience')}
                 placeholder="Who will use your product? (eg. Students, founders, restaurants, SMBs)."
+                required
                 className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent text-gray-900 placeholder-gray-400"
               />
             </div>
@@ -291,6 +374,7 @@ export default function Dashboard() {
                   value={formData.businessModel}
                   onChange={handleChange}
                   placeholder="B2B, B2C, SaaS, Marketplace, Subscription"
+                  required
                   className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent text-gray-900 placeholder-gray-400 pr-32"
                   readOnly
                   onClick={() => setShowBusinessModelDropdown(!showBusinessModelDropdown)}
@@ -347,6 +431,7 @@ export default function Dashboard() {
                 onChange={handleChange}
                 onKeyDown={(e) => handleKeyDown(e, 'competition')}
                 placeholder="Existing competitors (optional). What makes you different?"
+                required
                 className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent text-gray-900 placeholder-gray-400"
               />
             </div>
@@ -371,6 +456,7 @@ export default function Dashboard() {
                 onChange={handleChange}
                 onKeyDown={(e) => handleKeyDown(e, 'experience')}
                 placeholder="Work / Startup / Internship / Industry"
+                required
                 className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent text-gray-900 placeholder-gray-400"
               />
             </div>
@@ -388,6 +474,7 @@ export default function Dashboard() {
                 onChange={handleChange}
                 onKeyDown={(e) => handleKeyDown(e, 'qualification')}
                 placeholder="Degree, IIT/IIM/BITS/NIT, CA, MBA, BTech CSE, etc."
+                required
                 className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent text-gray-900 placeholder-gray-400"
               />
             </div>
@@ -405,6 +492,7 @@ export default function Dashboard() {
                 onChange={handleChange}
                 onKeyDown={(e) => handleKeyDown(e, 'skillsExpertise')}
                 placeholder="Tech, Business, Marketing, Finance, AI, Product, Sales, etc."
+                required
                 className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent text-gray-900 placeholder-gray-400"
               />
             </div>
@@ -422,6 +510,7 @@ export default function Dashboard() {
                 onChange={handleChange}
                 onKeyDown={(e) => handleKeyDown(e, 'founderRole')}
                 placeholder="Tech Founder / Business Founder / Solo Founder / Co-Founder"
+                required
                 className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent text-gray-900 placeholder-gray-400"
               />
             </div>
@@ -504,6 +593,7 @@ export default function Dashboard() {
                 onChange={handleChange}
                 onKeyDown={(e) => handleKeyDown(e, 'soloOrTeam')}
                 placeholder="Solo founder / Team-based"
+                required
                 className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent text-gray-900 placeholder-gray-400"
               />
             </div>
@@ -521,6 +611,7 @@ export default function Dashboard() {
                 onChange={handleChange}
                 onKeyDown={(e) => handleKeyDown(e, 'fullTimeCommitted')}
                 placeholder="Yes/Just Testing"
+                required
                 className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent text-gray-900 placeholder-gray-400"
               />
             </div>
@@ -538,19 +629,59 @@ export default function Dashboard() {
                 onKeyDown={(e) => handleKeyDown(e, 'vision2to5Years')}
                 placeholder="Describe your long-term vision for the startup"
                 rows="4"
+                required
                 className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent text-gray-900 placeholder-gray-400 resize-y"
               />
             </div>
           </div>
 
           {/* Submit Button */}
-          <div className="pt-6">
+          <div className="pt-6 space-y-4">
             <button
               type="submit"
-              className="flex justify-center items-center mx-auto w-full md:w-auto bg-orange-500 hover:bg-white hover:text-orange-500 border border-orange-500 text-white px-10 py-4 rounded-lg text-lg font-medium transition-colors shadow-md hover:shadow-lg hover:text-white-500 hover:border-orange-500 hover:border cursor-pointer"
+              disabled={isLoading}
+              className={`flex justify-center items-center mx-auto w-full md:w-auto bg-orange-500 border border-orange-500 text-white px-10 py-4 rounded-lg text-lg font-medium transition-colors shadow-md ${
+                isLoading 
+                  ? 'opacity-70 cursor-not-allowed' 
+                  : 'hover:bg-white hover:text-orange-500 hover:shadow-lg cursor-pointer'
+              }`}
             >
-              Get My Reality Check
+              {isLoading ? (
+                <span className="flex items-center gap-3">
+                  <svg 
+                    className="animate-spin h-5 w-5 text-white" 
+                    xmlns="http://www.w3.org/2000/svg" 
+                    fill="none" 
+                    viewBox="0 0 24 24"
+                  >
+                    <circle 
+                      className="opacity-25" 
+                      cx="12" 
+                      cy="12" 
+                      r="10" 
+                      stroke="currentColor" 
+                      strokeWidth="4"
+                    ></circle>
+                    <path 
+                      className="opacity-75" 
+                      fill="currentColor" 
+                      d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                    ></path>
+                  </svg>
+                  Evaluating your startup idea…
+                </span>
+              ) : (
+                'Get My Reality Check'
+              )}
             </button>
+            
+            {isLoading && (
+              <div className="text-center">
+                <p className="text-sm text-gray-600">
+                  👉 Analyzing feasibility, scalability, market potential using AI…
+                </p>
+              </div>
+            )}
           </div>
         </form>
       </div>
