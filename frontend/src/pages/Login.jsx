@@ -4,8 +4,8 @@ export default function Login() {
   const [isLogin, setIsLogin] = useState(true);
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-orange-50 px-4">
-      <div className="w-full max-w-lg bg-white rounded-3xl shadow-sm py-30 px-20 md:px-10 flex flex-col items-center">
+    <div className="min-h-screen flex items-center justify-center bg-orange-50 px-4 py-10 sm:py-16">
+      <div className="w-full max-w-md sm:max-w-lg bg-white rounded-3xl shadow-sm py-12 sm:py-10 px-6 sm:px-10 flex flex-col items-center">
         <div className="mb-6 text-lg font-semibold text-gray-800">Logo</div>
 
         <button className="w-full max-w-[250px] bg-gray-100 hover:bg-orange-400 hover:text-white text-gray-800 text-sm font-medium py-3 rounded-full mb-4 transition-colors cursor-pointer">
@@ -18,7 +18,7 @@ export default function Login() {
           <div className="flex-1 h-px bg-gray-200" />
         </div>
 
-        <div className="w-full bg-gray-50 rounded-3xl px-6 py-8">
+        <div className="w-full bg-gray-50 rounded-3xl px-5 sm:px-6 py-7 sm:py-8">
           {isLogin ? (
             <h2 className="text-center text-lg font-semibold text-gray-800 leading-snug mb-6">
               Log in to analyse

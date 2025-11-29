@@ -192,7 +192,7 @@ export default function Dashboard() {
   return (
     <div className="min-h-screen bg-[#F4EFEA]">
       {/* Navbar */}
-      <nav className="flex items-center justify-between px-8 py-5 max-w-7xl mx-auto w-full border-b border-gray-200 fixed top-0 left-0 right-0 z-50 bg-[#F4EFEA]">
+      <nav className="flex items-center justify-between px-4 sm:px-6 lg:px-8 py-4 sm:py-5 max-w-7xl mx-auto w-full border-b border-gray-200 fixed top-0 left-0 right-0 z-50 bg-[#F4EFEA]">
         {/* Logo */}
         <div 
           className="text-2xl font-bold text-[#8B4513] cursor-pointer"
@@ -202,7 +202,7 @@ export default function Dashboard() {
         </div>
         
         {/* Navigation Links */}
-        <div className="flex items-center gap-12">
+        <div className="flex items-center gap-4 sm:gap-8 md:gap-12 text-sm sm:text-base">
           <a 
             href="#top-startups" 
             className="text-gray-700 hover:text-gray-900 text-base font-medium transition-colors"
@@ -236,13 +236,13 @@ export default function Dashboard() {
       </nav>
 
       {/* Main Content */}
-      <div className="pt-28 pb-20 px-8 max-w-4xl mx-auto ">
+      <div className="pt-28 pb-20 px-4 sm:px-6 md:px-8 max-w-4xl mx-auto ">
         {/* Title Section */}
-        <div className="mb-12">
-          <h1 className="text-4xl md:text-5xl text-orange-500 hover:text-orange-300 mb-4 text-center mt-5">
+        <div className="mb-10 sm:mb-12">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl text-orange-500 hover:text-orange-300 mb-3 sm:mb-4 text-center mt-6 sm:mt-8">
             Get an Honest AI Evaluation for Your Idea
           </h1>
-          <p className="text-lg md:text-xl text-gray-700 text-center mt-10">
+          <p className="text-base sm:text-lg md:text-xl text-gray-700 text-center mt-6 sm:mt-8">
             Your First Step Into the Startup World
           </p>
         </div>

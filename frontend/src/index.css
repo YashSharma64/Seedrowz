@@ -3,3 +3,59 @@
 body {
   font-family: 'Poppins', sans-serif;
 }
+
+@media (max-width: 640px) {
+  nav {
+    flex-direction: row;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+    padding-bottom: 2rem;
+    row-gap: 1rem;
+
+   
+    
+    
+    
+  }
+  
+  .home-title {
+    font-size: 2rem;
+    line-height: 1.1;
+    margin-top: 6rem;
+    text-align: center;
+
+
+  }
+
+  .home-heading {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .home-heading-main {
+    font-size: 2rem;  
+    white-space: normal;
+    text-align: center;
+  }
+
+  .home-heading-brand {
+    font-size: 2.5rem;
+    margin-left: 0.5rem;
+    white-space: normal;
+    text-align: center;
+  }
+
+  .home-underline-wrap {
+    justify-content: center;
+  }
+
+  .home-underline {
+    width: 100%;
+    max-width: 260px;
+  }
+
+}
+
+body {
+  overflow-x: hidden;
+}

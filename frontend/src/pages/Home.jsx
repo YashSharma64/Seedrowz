@@ -51,25 +51,25 @@ export default function Home() {
       </nav>
 
       {/* Hero Section */}
-      <section className="px-8 py-20 md:py-20 lg:py-24 max-w-7xl mx-auto">
+      <section className="px-8 py-20 md:py-20 lg:py-24 max-w-7xl mx-auto home-hero">
         <div className="max-w-5xl">
           {/* Headline */}
-          <h1 className="text-5xl md:text-7xl lg:text-5xl font-normal text-gray-800 mb-4 leading-tight mt-20">
+          <h1 className="text-5xl md:text-7xl lg:text-5xl font-normal text-gray-800 mb-4 leading-tight mt-20 home-title">
             Hey Founders,
           </h1>
           
           {/* Welcome Message */}
           <div className="mb-10">
-            <div className="flex items-baseline gap-3 flex-nowrap">
-              <h2 className="text-6xl md:text-7xl lg:text-7xl font-normal text-gray-800 leading-tight whitespace-nowrap">
+            <div className="flex items-baseline gap-3 flex-nowrap home-heading">
+              <h2 className="text-6xl md:text-7xl lg:text-7xl font-normal text-gray-800 leading-tight whitespace-nowrap home-heading-main">
                 Welcome to
               </h2>
               <div className="relative inline-block">
-                <h3 className="text-9xl md:text-11xl lg:text-12xl ml-3 font-normal text-orange-500 leading-none whitespace-nowrap">
+                <h3 className="text-9xl md:text-11xl lg:text-12xl ml-3 font-normal text-orange-500 leading-none whitespace-nowrap home-heading-brand">
                   Seedrowz
                 </h3>
-                <div className="flex items-center mt-3">
-                  <div className="h-2 md:h-1.6 bg-orange-500 w-[600px] max-w-[600px]"></div>
+                <div className="flex items-center mt-3 home-hero-underline-wrap">
+                  <div className="h-2 md:h-1.6 bg-orange-500 w-[600px] max-w-[600px] home-underline"></div>
                   
                 </div>
               </div>
@@ -89,7 +89,7 @@ export default function Home() {
           {/* CTA Button */}
           <button 
             onClick={() => navigate('/dashboard')}
-            className="mx-auto flex justify-center items-center bg-orange-500 hover:bg-white hover:text-orange-500 border border-orange-500 text-white px-10 py-5 rounded-4xl text-lg md:text-xl font-medium transition-colors shadow-lg hover:shadow-xl cursor-pointer "
+            className="mx-auto flex justify-center items-center bg-orange-500 hover:bg-white hover:text-orange-500 border border-orange-500 text-white px-10 py-5 rounded-4xl text-lg md:text-xl font-medium transition-colors shadow-lg hover:shadow-xl cursor-pointer"
           >
             Get the Reality Check
           </button>

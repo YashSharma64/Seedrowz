@@ -39,7 +39,7 @@ export default function Result() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-[#F4EFEA] flex items-center justify-center">
+      <div className="min-h-screen bg-[#F4EFEA] flex items-center justify-center px-4">
         <div className="text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-orange-500 mx-auto mb-4"></div>
           <p className="text-gray-600">Loading your results...</p>
@@ -50,7 +50,7 @@ export default function Result() {
 
   if (!evaluation) {
     return (
-      <div className="min-h-screen bg-[#F4EFEA] flex items-center justify-center">
+      <div className="min-h-screen bg-[#F4EFEA] flex items-center justify-center px-4">
         <div className="text-center">
           <p className="text-gray-600 mb-4">No evaluation data found.</p>
           <button
@@ -67,7 +67,7 @@ export default function Result() {
   return (
     <div className="min-h-screen bg-[#F4EFEA]">
       {/* Navbar */}
-      <nav className="flex items-center justify-between px-8 py-5 max-w-7xl mx-auto w-full border-b border-gray-200 fixed top-0 left-0 right-0 z-50 bg-[#F4EFEA]">
+      <nav className="flex items-center justify-between px-4 sm:px-6 lg:px-8 py-4 sm:py-5 max-w-7xl mx-auto w-full border-b border-gray-200 fixed top-0 left-0 right-0 z-50 bg-[#F4EFEA]">
         {/* Logo */}
         <div 
           className="text-2xl font-bold text-[#8B4513] cursor-pointer"
@@ -77,7 +77,7 @@ export default function Result() {
         </div>
         
         {/* Navigation Links */}
-        <div className="flex items-center gap-12">
+        <div className="flex items-center gap-4 sm:gap-8 md:gap-12 text-sm sm:text-base">
           <a 
             href="#top-startups" 
             className="text-gray-700 hover:text-gray-900 text-base font-medium transition-colors"
@@ -111,7 +111,7 @@ export default function Result() {
       </nav>
 
       {/* Main Content */}
-      <div className="pt-28 pb-20 px-8 max-w-4xl mx-auto">
+      <div className="pt-28 pb-20 px-4 sm:px-6 md:px-8 max-w-4xl mx-auto">
         {/* Title Section */}
         <div className="mb-12 text-center">
           <h1 className="text-4xl md:text-5xl font-normal text-orange-500 mb-4">
@@ -123,7 +123,7 @@ export default function Result() {
         </div>
 
         {/* Results Container with Border */}
-        <div className="bg-white rounded-lg border-2 border-orange-500 p-8 shadow-lg">
+        <div className="bg-white rounded-lg border-2 border-orange-500 p-6 sm:p-8 shadow-lg">
           {/* Verdict Section */}
           <div className="mb-8 text-center">
             <div className={`inline-block px-6 py-3 rounded-full text-xl font-semibold ${
@@ -146,7 +146,7 @@ export default function Result() {
           )}
 
           {/* Scores Grid */}
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-6 mb-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6 mb-8">
             <div className="bg-gray-50 p-4 rounded-lg">
               <p className="text-sm text-gray-600 mb-2">Feasibility</p>
               <p className="text-3xl font-bold text-orange-500">{evaluation.feasibility || 0}%</p>
@@ -221,16 +221,16 @@ export default function Result() {
           )}
 
           {/* Action Buttons */}
-          <div className="flex gap-4 justify-center mt-8">
+          <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center mt-8">
             <button
               onClick={() => navigate('/dashboard')}
-              className="bg-gray-200 hover:bg-gray-300 text-gray-800 px-6 py-3 rounded-lg font-medium transition-colors"
+              className="bg-gray-200 hover:bg-gray-300 text-gray-800 px-6 py-3 rounded-lg font-medium transition-colors w-full sm:w-auto"
             >
               Evaluate Another Idea
             </button>
             <button
               onClick={() => navigate('/')}
-              className="bg-orange-500 hover:bg-orange-600 text-white px-6 py-3 rounded-lg font-medium transition-colors"
+              className="bg-orange-500 hover:bg-orange-600 text-white px-6 py-3 rounded-lg font-medium transition-colors w-full sm:w-auto"
             >
               Back to Home
             </button>
