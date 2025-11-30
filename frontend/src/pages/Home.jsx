@@ -5,14 +5,14 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-white flex flex-col justify-center items-center w-full">
-      {/* Navbar */}
+      {/* Nav */}
       <nav className="flex items-center justify-between px-8 py-5 max-w-7xl mx-auto w-full border-b border-gray-200 fixed top-3 left-0 right-0 z-50 bg-white">
         {/* Logo */}
         <div className="text-2xl font-bold text-[#8B4513] cursor-pointer">
           Seedrowz
         </div>
         
-        {/* Navigation Links */}
+        {/* Nav Links */}
         <div className="flex items-center gap-12">
           <a 
             href="#top-startups" 
@@ -50,7 +50,7 @@ export default function Home() {
         </div>
       </nav>
 
-      {/* Hero Section */}
+      {/* Main */}
       <section className="px-8 py-20 md:py-20 lg:py-24 max-w-7xl mx-auto home-hero">
         <div className="max-w-5xl">
           {/* Headline */}
@@ -76,17 +76,15 @@ export default function Home() {
             </div>
           </div>
           
-          {/* Tagline 1 */}
+  
           <p className="text-center text-2xl md:text-3xl text-gray-700 mb-5 font-normal leading-relaxed max-w-4xl mx-auto">
             AI that grades your startup idea before investors do.
           </p>
-          
-          {/* Tagline 2 */}
+
           <p className="text-center text-lg md:text-xl text-dark-blue-500 mb-14 font-normal leading-relaxed max-w-3xl mx-auto ">
             Get an instant reality check, roadmap & investor recommendations powered by AI
           </p>
           
-          {/* CTA Button */}
           <button 
             onClick={() => navigate('/dashboard')}
             className="mx-auto flex justify-center items-center bg-orange-500 hover:bg-white hover:text-orange-500 border border-orange-500 text-white px-10 py-5 rounded-4xl text-lg md:text-xl font-medium transition-colors shadow-lg hover:shadow-xl cursor-pointer"
@@ -97,7 +95,6 @@ export default function Home() {
       </section>
         
 
-      {/* How Seedrowz Works Section */}
       <section className="px-8 py-20 max-w-7xl mx-auto">
         <h2 className="text-5xl md:text-6xl font-normal text-gray-800">
           How Seedrowz works?

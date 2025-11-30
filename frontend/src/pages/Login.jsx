@@ -1,7 +1,81 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 export default function Login() {
+  const navigate = useNavigate();
   const [isLogin, setIsLogin] = useState(true);
+  const [form, setForm] = useState({
+    username: '',
+    email: '',
+    password: '',
+    linkedin: '',
+  });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const handleChange = (e) => {
+    const { id, value } = e.target;
+    setForm((prev) => ({ ...prev, [id]: value }));
+  };
+
+  const handleSubmit = async () => {
+    if (!form.email || !form.password || (!isLogin && !form.username)) {
+      alert('Please fill in the required fields.');
+      return;
+    }
+
+    setIsSubmitting(true);
+
+    try {
+      const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000';
+      const endpoint = isLogin ? '/api/users/login' : '/api/users/register';
+
+      const body = isLogin
+        ? {
+            email: form.email,
+            password: form.password,
+          }
+        : {
+            name: form.username,
+            email: form.email,
+            password: form.password,
+            role: 'user',
+          };
+
+      const response = await fetch(`${API_BASE_URL}${endpoint}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(body),
+      });
+
+      const data = await response.json().catch(() => ({}));
+
+      if (!response.ok) {
+        const message = data.error || data.message || 'Something went wrong. Please try again.';
+        throw new Error(message);
+      }
+
+      if (isLogin) {
+        if (!data.token) {
+          throw new Error('Login succeeded but no token was returned from the server.');
+        }
+
+        localStorage.setItem('token', data.token);
+        localStorage.setItem('user', JSON.stringify(data.user || {}));
+
+        navigate('/dashboard');
+      } else {
+        alert('Account created successfully. You can now log in.');
+        setIsLogin(true);
+      }
+    } catch (err) {
+      console.error('Auth error:', err);
+      alert(err.message || 'Unable to complete the request.');
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-orange-50 px-4 py-10 sm:py-16">
@@ -40,7 +114,9 @@ export default function Login() {
                 id="username"
                 type="text"
                 className="w-full bg-transparent border-0 border-b border-gray-200 focus:border-gray-400 focus:outline-none text-sm py-1.5"
-                placeholder=""
+                placeholder="Enter your username"
+                value={form.username}
+                onChange={handleChange}
               />
             </div>
           )}
@@ -53,7 +129,9 @@ export default function Login() {
               id="email"
               type="email"
               className="w-full bg-transparent border-0 border-b border-gray-200 focus:border-gray-400 focus:outline-none text-sm py-1.5"
-              placeholder=""
+              placeholder="Enter your email"
+              value={form.email}
+              onChange={handleChange}
             />
           </div>
 
@@ -66,6 +144,8 @@ export default function Login() {
               type="password"
               className="w-full bg-transparent border-0 border-b border-gray-200 focus:border-gray-400 focus:outline-none text-sm py-1.5"
               placeholder=""
+              value={form.password}
+              onChange={handleChange}
             />
           </div>
 
@@ -79,15 +159,19 @@ export default function Login() {
                 type="url"
                 className="w-full bg-transparent border-0 border-b border-gray-200 focus:border-gray-400 focus:outline-none text-sm py-1.5"
                 placeholder=""
+                value={form.linkedin}
+                onChange={handleChange}
               />
             </div>
           )}
 
           <button
             type="button"
-            className="w-full bg-[#FF7A32] hover:bg-[#ff8747] text-white font-semibold text-sm py-3 rounded-full shadow-sm transition-colors mt-2 cursor-pointer"
+            className="w-full bg-[#FF7A32] hover:bg-[#ff8747] text-white font-semibold text-sm py-3 rounded-full shadow-sm transition-colors mt-2 cursor-pointer disabled:opacity-60 disabled:cursor-not-allowed"
+            onClick={handleSubmit}
+            disabled={isSubmitting}
           >
-            {isLogin ? 'Login' : 'Signup'}
+            {isSubmitting ? 'Please wait…' : isLogin ? 'Login' : 'Signup'}
           </button>
         </div>
 

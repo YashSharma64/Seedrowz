@@ -66,7 +66,7 @@ export default function Result() {
 
   return (
     <div className="min-h-screen bg-[#F4EFEA]">
-      {/* Navbar */}
+      {/* Nav  */}
       <nav className="flex items-center justify-between px-4 sm:px-6 lg:px-8 py-4 sm:py-5 max-w-7xl mx-auto w-full border-b border-gray-200 fixed top-0 left-0 right-0 z-50 bg-[#F4EFEA]">
         {/* Logo */}
         <div 
@@ -76,7 +76,7 @@ export default function Result() {
           Seedrowz
         </div>
         
-        {/* Navigation Links */}
+        {/* Nav Link */}
         <div className="flex items-center gap-4 sm:gap-8 md:gap-12 text-sm sm:text-base">
           <a 
             href="#top-startups" 
@@ -122,7 +122,6 @@ export default function Result() {
           </p>
         </div>
 
-        {/* Results Container with Border */}
         <div className="bg-white rounded-lg border-2 border-orange-500 p-6 sm:p-8 shadow-lg">
           {/* Verdict Section */}
           <div className="mb-8 text-center">

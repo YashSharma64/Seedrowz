@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 
 export default function Dashboard() {
   const navigate = useNavigate();
+  const [currentUser, setCurrentUser] = useState(null);
   const [formData, setFormData] = useState({
     startupTitle: '',
     oneLinePitch: '',
@@ -45,6 +46,24 @@ export default function Dashboard() {
     soloOrTeam: useRef(null),
     fullTimeCommitted: useRef(null),
     vision2to5Years: useRef(null),
+  };
+
+  useEffect(() => {
+    const storedUser = localStorage.getItem('user');
+    if (storedUser) {
+      try {
+        setCurrentUser(JSON.parse(storedUser));
+      } catch {
+        setCurrentUser(null);
+      }
+    }
+  }, []);
+
+  const handleLogout = () => {
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
+    setCurrentUser(null);
+    navigate('/login');
   };
 
 
@@ -108,6 +127,13 @@ export default function Dashboard() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     
+    const token = localStorage.getItem('token');
+    if (!token) {
+      alert('Please log in before submitting your idea.');
+      navigate('/login');
+      return;
+    }
+
     setIsLoading(true);
     
     try {
@@ -117,7 +143,7 @@ export default function Dashboard() {
         pitch: formData.oneLinePitch,
         problem: formData.problemStatement,
         solution: formData.proposedSolution,
-        marketSize: '', // Not in form, it can be added later if needed
+        marketSize: '', // Not in form, it can be added later agar jrurat padi to
         targetAudience: formData.targetAudience,
         businessModel: formData.businessModel,
         competition: formData.competition,
@@ -130,7 +156,7 @@ export default function Dashboard() {
         vision: formData.vision2to5Years,
       };
 
-      // Get API base URL from environment or use default
+      // Get API base URL from environment
       const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000';
       
       console.log('Submitting to:', `${API_BASE_URL}/api/evaluate-idea`);
@@ -140,6 +166,7 @@ export default function Dashboard() {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`,
         },
         body: JSON.stringify(requestBody),
       });
@@ -191,7 +218,7 @@ export default function Dashboard() {
 
   return (
     <div className="min-h-screen bg-[#F4EFEA]">
-      {/* Navbar */}
+      {/* Nav */}
       <nav className="flex items-center justify-between px-4 sm:px-6 lg:px-8 py-4 sm:py-5 max-w-7xl mx-auto w-full border-b border-gray-200 fixed top-0 left-0 right-0 z-50 bg-[#F4EFEA]">
         {/* Logo */}
         <div 
@@ -201,7 +228,7 @@ export default function Dashboard() {
           Seedrowz
         </div>
         
-        {/* Navigation Links */}
+        {/* Nav Links */}
         <div className="flex items-center gap-4 sm:gap-8 md:gap-12 text-sm sm:text-base">
           <a 
             href="#top-startups" 
@@ -216,21 +243,31 @@ export default function Dashboard() {
             About Us
           </a>
           
-          {/* User Profile Icon */}
-          <div className="flex items-center justify-center w-10 h-10 rounded-full bg-gray-200 cursor-pointer hover:bg-gray-300 transition-colors">
-            <svg 
-              xmlns="http://www.w3.org/2000/svg" 
-              className="h-6 w-6 text-gray-700" 
-              viewBox="0 0 24 24" 
-              fill="none" 
-              stroke="currentColor" 
-              strokeWidth="2" 
-              strokeLinecap="round" 
-              strokeLinejoin="round"
-            >
-              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
-              <circle cx="12" cy="7" r="4" />
-            </svg>
+          {/* User info and Auth button */}
+          <div className="flex items-center gap-3">
+            {currentUser && (
+              <>
+                <span className="hidden sm:inline text-gray-700 text-sm">
+                  Hi, {currentUser.name || currentUser.email || 'Founder'}
+                </span>
+                <button
+                  type="button"
+                  onClick={handleLogout}
+                  className="flex items-center justify-center px-4 py-2 rounded-full bg-gray-200 hover:bg-gray-300 text-gray-800 text-xs sm:text-sm font-medium transition-colors"
+                >
+                  Logout
+                </button>
+              </>
+            )}
+            {!currentUser && (
+              <button
+                type="button"
+                onClick={() => navigate('/login')}
+                className="flex items-center justify-center px-4 py-2 rounded-full bg-gray-200 hover:bg-gray-300 text-gray-800 text-xs sm:text-sm font-medium transition-colors"
+              >
+                Login
+              </button>
+            )}
           </div>
         </div>
       </nav>
@@ -249,7 +286,7 @@ export default function Dashboard() {
 
         {/* Form */}
         <form onSubmit={handleSubmit} className="space-y-12">
-          {/* Section 1: Basic Info */}
+
           <div className="space-y-6">
             <div>
               <label htmlFor="startupTitle" className="block text-base font-medium text-gray-700 mb-2">
@@ -288,7 +325,7 @@ export default function Dashboard() {
             </div>
           </div>
 
-          {/* Section 2: Problem & Solution */}
+
           <div className="space-y-6">
             <h2 className="text-2xl md:text-3xl font-bold text-gray-800 mb-6">
               Problem & Solution
@@ -331,7 +368,6 @@ export default function Dashboard() {
             </div>
           </div>
 
-          {/* Section 3: Market & Audience */}
           <div className="space-y-6">
             <h2 className="text-2xl md:text-3xl font-bold text-gray-800 mb-6">
               Market & Audience
@@ -356,7 +392,7 @@ export default function Dashboard() {
             </div>
           </div>
 
-          {/* Section 4: Business & Competition */}
+
           <div className="space-y-6">
             <h2 className="text-2xl md:text-3xl font-bold text-gray-800 mb-6">
               Business & Competition
@@ -437,7 +473,7 @@ export default function Dashboard() {
             </div>
           </div>
 
-          {/* Section 5: Founder Information */}
+        
           <div className="space-y-6">
             <h2 className="text-2xl md:text-3xl font-bold text-gray-800 mb-6">
               Founder Information
@@ -516,7 +552,7 @@ export default function Dashboard() {
             </div>
           </div>
 
-          {/* Section 6: Traction (Optional) */}
+          {/* Traction (Optional) hai */}
           <div className="space-y-6">
             <h2 className="text-2xl md:text-3xl font-bold text-gray-800 mb-6">
               Traction (Optional)
@@ -574,7 +610,7 @@ export default function Dashboard() {
             </div>
           </div>
 
-          {/* Section 7: Vision */}
+      
           <div className="space-y-6">
             <h2 className="text-2xl md:text-3xl font-bold text-gray-800 mb-6">
               Vision
@@ -635,7 +671,7 @@ export default function Dashboard() {
             </div>
           </div>
 
-          {/* Submit Button */}
+  
           <div className="pt-6 space-y-4">
             <button
               type="submit"
