@@ -113,6 +113,7 @@ export default function Login() {
               <input
                 id="username"
                 type="text"
+                autoComplete="off"
                 className="w-full bg-transparent border-0 border-b border-gray-200 focus:border-gray-400 focus:outline-none text-sm py-1.5"
                 placeholder="Enter your username"
                 value={form.username}
@@ -128,6 +129,7 @@ export default function Login() {
             <input
               id="email"
               type="email"
+              autoComplete="off"
               className="w-full bg-transparent border-0 border-b border-gray-200 focus:border-gray-400 focus:outline-none text-sm py-1.5"
               placeholder="Enter your email"
               value={form.email}
@@ -142,8 +144,9 @@ export default function Login() {
             <input
               id="password"
               type="password"
+              autoComplete="new-password"
               className="w-full bg-transparent border-0 border-b border-gray-200 focus:border-gray-400 focus:outline-none text-sm py-1.5"
-              placeholder=""
+              placeholder="Enter your password"
               value={form.password}
               onChange={handleChange}
             />
@@ -158,7 +161,7 @@ export default function Login() {
                 id="linkedin"
                 type="url"
                 className="w-full bg-transparent border-0 border-b border-gray-200 focus:border-gray-400 focus:outline-none text-sm py-1.5"
-                placeholder=""
+                placeholder="Enter your linkedin URL"
                 value={form.linkedin}
                 onChange={handleChange}
               />

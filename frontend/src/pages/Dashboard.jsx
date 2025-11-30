@@ -253,7 +253,7 @@ export default function Dashboard() {
                 <button
                   type="button"
                   onClick={handleLogout}
-                  className="flex items-center justify-center px-4 py-2 rounded-full bg-gray-200 hover:bg-gray-300 text-gray-800 text-xs sm:text-sm font-medium transition-colors"
+                  className="flex items-center justify-center px-4 py-2 rounded-lg bg-orange-500 text-white text-xs sm:text-sm font-medium border border-orange-500 transition-colors hover:bg-white hover:text-orange-500 cursor-pointer"
                 >
                   Logout
                 </button>
@@ -263,7 +263,7 @@ export default function Dashboard() {
               <button
                 type="button"
                 onClick={() => navigate('/login')}
-                className="flex items-center justify-center px-4 py-2 rounded-full bg-gray-200 hover:bg-gray-300 text-gray-800 text-xs sm:text-sm font-medium transition-colors"
+                className="flex items-center justify-center px-4 py-2 rounded-lg bg-orange-500 text-white text-xs sm:text-sm font-medium border border-orange-500 transition-colors hover:bg-white hover:text-orange-500 cursor-pointer"
               >
                 Login
               </button>
