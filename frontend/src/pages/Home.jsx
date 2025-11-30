@@ -22,7 +22,7 @@ export default function Home() {
       <nav className="flex items-center justify-between px-8 py-5 max-w-7xl mx-auto w-full border-b border-gray-200 fixed top-3 left-0 right-0 z-50 bg-white">
         {/* Logo */}
         <div className="text-2xl font-bold text-[#8B4513] cursor-pointer">
-          Seedrowz
+          <img src="/new.png" alt="Seedrowz logo" className="h-9 object-contain cursor-pointer" />
         </div>
         
         {/* Nav Links */}

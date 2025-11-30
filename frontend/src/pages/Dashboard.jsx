@@ -222,10 +222,10 @@ export default function Dashboard() {
       <nav className="flex items-center justify-between px-4 sm:px-6 lg:px-8 py-4 sm:py-5 max-w-7xl mx-auto w-full border-b border-gray-200 fixed top-0 left-0 right-0 z-50 bg-[#F4EFEA]">
         {/* Logo */}
         <div 
-          className="text-2xl font-bold text-[#8B4513] cursor-pointer"
+          className="cursor-pointer"
           onClick={() => navigate('/')}
         >
-          Seedrowz
+          <img src="/new.png" alt="Seedrowz logo" className="h-9 object-contain cursor-pointer" />
         </div>
         
         {/* Nav Links */}
