@@ -80,7 +80,7 @@ export default function Login() {
   return (
     <div className="min-h-screen flex items-center justify-center bg-orange-50 px-4 py-10 sm:py-16">
       <div className="w-full max-w-md sm:max-w-lg bg-white rounded-3xl shadow-sm py-12 sm:py-10 px-6 sm:px-10 flex flex-col items-center">
-        <div className="mb-6 text-lg font-semibold text-gray-800">Logo</div>
+        <div className='h-[100px] w-[50px]'><img src="/loginlogo.png"/></div>
 
         <button className="w-full max-w-[250px] bg-gray-100 hover:bg-orange-400 hover:text-white text-gray-800 text-sm font-medium py-3 rounded-full mb-4 transition-colors cursor-pointer">
           Continue with Github

@@ -51,4 +51,3 @@ Example file: `backend/training-dataset/examples/sample-evaluation.json`
 }
 ```
 
-You can add as many JSON files as you like under `examples/`. Each file should follow a similar structure so it’s easy to use later for fine-tuning or retrieval-based prompts.
