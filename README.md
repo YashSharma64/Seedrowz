@@ -16,7 +16,7 @@ It delivers an instant **Pass / Needs Work / Risky** verdict, generates a **90-d
 - 👥 **Founder Persona Matcher** – AI suggests ideal co-founder pairing (Tech / Biz / Design)  
 - 🔒 **User Dashboard** – Track and save multiple startup ideas  
 - 🇮🇳 **India-Specific Insights** – Integrated with Indian startup ecosystem data (Blume, 100X.VC, IAN, etc.)  
-
+hi
 ---
 
 ## 🧩 Tech Stack  
