@@ -24,11 +24,26 @@ export default function Result() {
 
   const fetchEvaluation = async (id) => {
     try {
+      const token = localStorage.getItem('token');
+      if (!token) {
+        navigate('/login');
+        return;
+      }
+
       const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000';
-      const response = await fetch(`${API_BASE_URL}/api/evaluation/${id}`);
+      const response = await fetch(`${API_BASE_URL}/api/evaluation/${id}`, {
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      });
+      
       if (response.ok) {
         const data = await response.json();
         setEvaluation(data);
+      } else if (response.status === 401) {
+        navigate('/login');
+      } else {
+        console.error('Failed to fetch evaluation');
       }
     } catch (error) {
       console.error('Error fetching evaluation:', error);

@@ -2,16 +2,14 @@ import prisma from "../config/db.js";
 import { GoogleGenerativeAI } from "@google/generative-ai";
 
 
-const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
-if (!GEMINI_API_KEY) {
-  console.warn("Warning: GEMINI_API_KEY is not set. AI evaluation will not be available.");
-}
-const GEMINI_MODEL = process.env.GEMINI_MODEL || "gemini-2.5-flash";
-
 const evaluateIdea = async (req, res) => {
   try {
     console.log('Received evaluation request:', req.body);
     
+    // Read env vars inside request handler to ensure dotenv has loaded
+    const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
+    const GEMINI_MODEL = process.env.GEMINI_MODEL || "gemini-2.5-flash";
+
     if (!GEMINI_API_KEY) {
       return res.status(500).json({
         error: "AI service not configured",
@@ -85,10 +83,15 @@ Return ONLY valid JSON, no additional text.`;
     // Call Gemini API 
     let aiEvaluation;
     try {
+      console.log(`[Backend Debug] Sending prompt to model: ${GEMINI_MODEL}`);
       const model = genAI.getGenerativeModel({ model: GEMINI_MODEL });
       const result = await model.generateContent(prompt);
       const response = await result.response;
       const aiResponseText = response.text();
+
+      console.log("[Backend Debug] --- RAW AI RESPONSE ---");
+      console.log(aiResponseText);
+      console.log("[Backend Debug] -----------------------");
 
       try {
         // Clean the response 
@@ -97,9 +100,10 @@ Return ONLY valid JSON, no additional text.`;
           .replace(/```\n?/g, "")
           .trim();
         aiEvaluation = JSON.parse(cleanedResponse);
+        console.log("[Backend Debug] Successfully parsed AI response");
       } catch (parseError) {
-        console.error("Error parsing AI response:", parseError);
-        console.error("AI Response:", aiResponseText);
+        console.error("[Backend Debug] Error parsing AI response:", parseError);
+        console.error("[Backend Debug] JSON content causing error:", aiResponseText);
         // Agr server off hai to Default answers 
         aiEvaluation = {
           feasibility: 70,
@@ -107,28 +111,28 @@ Return ONLY valid JSON, no additional text.`;
           competition: 65,
           scalability: 70,
           executionDifficulty: 60,
-          verdict: "Needs Work",
-          summary: "This is an automated Seedrowz evaluation based on your inputs. Use the scores and next steps as a starting point to refine your startup idea.",
-          nextSteps: ["Refine your pitch", "Build MVP", "Validate with users"],
-          techStack: "React, Node.js, Database",
-          fundingStage: "Pre-Seed / Angel",
+          verdict: "Needs Work (Parse Error)",
+          summary: "There was an error processing the AI response. Please try again.",
+          nextSteps: ["Retry analysis"],
+          techStack: "Unknown",
+          fundingStage: "Unknown",
           investorMatches: [],
         };
       }
     } catch (aiError) {
-      console.error("Error calling Gemini API, using fallback evaluation:", aiError);
-      // Fallback if the model call itself fails (e.g. 404 model not found, invalid key, etc.)
+      console.error("[Backend Debug] Error calling Gemini API:", aiError);
+      // Fallback if the model call itself fails
       aiEvaluation = {
         feasibility: 70,
         marketPotential: 75,
         competition: 65,
         scalability: 70,
         executionDifficulty: 60,
-        verdict: "Needs Work",
-        summary: "This is an automated Seedrowz evaluation based on your inputs. Use the scores and next steps as a starting point to refine your startup idea.",
-        nextSteps: ["Refine your pitch", "Build MVP", "Validate with users"],
-        techStack: "React, Node.js, Database",
-        fundingStage: "Pre-Seed / Angel",
+        verdict: "Needs Work (API Error)",
+        summary: "There was an error connecting to the AI service. Please check the backend logs.",
+        nextSteps: ["Check API Key", "Check Model Availability"],
+        techStack: "Unknown",
+        fundingStage: "Unknown",
         investorMatches: [],
       };
     }
