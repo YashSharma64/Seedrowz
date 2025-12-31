@@ -18,15 +18,12 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-white flex flex-col justify-center items-center w-full">
-      {/* Nav */}
       <nav className="flex items-center justify-between px-8 py-5 max-w-7xl mx-auto w-full border-b border-gray-200 fixed top-3 left-0 right-0 z-50 bg-white">
-        {/* Logo */}
         <div className="text-2xl font-bold text-[#8B4513] cursor-pointer">
           <img src="/new.png" alt="Seedrowz logo" className="h-9 object-contain cursor-pointer" />
         </div>
         
-        {/* Nav Links */}
-        <div className="flex items-center gap-12">
+        <div className="hidden md:flex items-center gap-12">
           <a 
             href="#top-startups" 
             className="text-gray-700 hover:text-gray-900 text-base font-medium transition-colors"
@@ -40,7 +37,6 @@ export default function Home() {
             About Us
           </a>
           
-          {/* User greeting / Auth button */}
           <div className="flex items-center gap-4 ml-4">
             {currentUser && (
               <>
@@ -80,26 +76,26 @@ export default function Home() {
         </div>
       </nav>
 
-      {/* Main */}
+
       <section className="px-8 py-20 md:py-20 lg:py-24 max-w-7xl mx-auto home-hero">
         <div className="max-w-5xl">
           {/* Headline */}
-          <h1 className="text-5xl md:text-7xl lg:text-5xl font-normal text-gray-800 mb-4 leading-tight mt-20 home-title">
+          <h1 className="text-4xl sm:text-5xl md:text-7xl lg:text-5xl font-normal text-gray-800 mb-4 leading-tight mt-20 home-title">
             Hey Founders,
           </h1>
           
           {/* Welcome Message */}
           <div className="mb-10">
-            <div className="flex items-baseline gap-3 flex-nowrap home-heading">
-              <h2 className="text-6xl md:text-7xl lg:text-7xl font-normal text-gray-800 leading-tight whitespace-nowrap home-heading-main">
+            <div className="flex flex-col sm:flex-row items-center sm:items-baseline gap-2 sm:gap-3 flex-nowrap home-heading">
+              <h2 className="text-5xl sm:text-6xl md:text-7xl lg:text-7xl font-normal text-gray-800 leading-tight whitespace-nowrap home-heading-main">
                 Welcome to
               </h2>
               <div className="relative inline-block">
-                <h3 className="text-9xl md:text-11xl lg:text-12xl ml-3 font-normal text-orange-500 leading-none whitespace-nowrap home-heading-brand">
+                <h3 className="text-6xl sm:text-9xl md:text-11xl lg:text-12xl ml-0 sm:ml-3 font-normal text-orange-500 leading-none whitespace-nowrap home-heading-brand">
                   Seedrowz
                 </h3>
-                <div className="flex items-center mt-3 home-hero-underline-wrap">
-                  <div className="h-2 md:h-1.6 bg-orange-500 w-[600px] max-w-[600px] home-underline"></div>
+                <div className="flex items-center mt-3 home-hero-underline-wrap justify-center sm:justify-start">
+                  <div className="h-2 md:h-1.6 bg-orange-500 w-full max-w-[200px] sm:max-w-[600px] home-underline"></div>
                   
                 </div>
               </div>
@@ -107,11 +103,11 @@ export default function Home() {
           </div>
           
   
-          <p className="text-center text-2xl md:text-3xl text-gray-700 mb-5 font-normal leading-relaxed max-w-4xl mx-auto">
+          <p className="text-center text-xl sm:text-2xl md:text-3xl text-gray-700 mb-5 font-normal leading-relaxed max-w-4xl mx-auto">
             AI that grades your startup idea before investors do.
           </p>
 
-          <p className="text-center text-lg md:text-xl text-dark-blue-500 mb-14 font-normal leading-relaxed max-w-3xl mx-auto ">
+          <p className="text-center text-base sm:text-lg md:text-xl text-dark-blue-500 mb-14 font-normal leading-relaxed max-w-3xl mx-auto ">
             Get an instant reality check, roadmap & investor recommendations powered by AI
           </p>
           
@@ -126,7 +122,7 @@ export default function Home() {
         
 
       <section className="px-8 py-20 max-w-7xl mx-auto">
-        <h2 className="text-5xl md:text-6xl font-normal text-gray-800">
+        <h2 className="text-3xl sm:text-5xl md:text-6xl font-normal text-gray-800 text-center sm:text-left">
           How Seedrowz works?
         </h2>
       </section>

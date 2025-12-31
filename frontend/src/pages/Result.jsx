@@ -96,7 +96,7 @@ export default function Result() {
         </div>
         
         {/* Nav Link */}
-        <div className="flex items-center gap-4 sm:gap-8 md:gap-12 text-sm sm:text-base">
+        <div className="hidden md:flex items-center gap-4 sm:gap-8 md:gap-12 text-sm sm:text-base">
           <a 
             href="#top-startups" 
             className="text-gray-700 hover:text-gray-900 text-base font-medium transition-colors"
