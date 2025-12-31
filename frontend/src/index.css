@@ -5,18 +5,7 @@ body {
 }
 
 @media (max-width: 640px) {
-  nav {
-    flex-direction: row;
-    margin-top: 2rem;
-    margin-bottom: 2rem;
-    padding-bottom: 2rem;
-    row-gap: 1rem;
 
-   
-    
-    
-    
-  }
   
   .home-title {
     font-size: 2rem;

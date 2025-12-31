@@ -18,7 +18,7 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-white flex flex-col justify-center items-center w-full">
-      <nav className="flex items-center justify-between px-8 py-5 max-w-7xl mx-auto w-full border-b border-gray-200 fixed top-3 left-0 right-0 z-50 bg-white">
+      <nav className="flex items-center justify-between px-8 py-5 max-w-7xl mx-auto w-full border-b border-gray-200 fixed top-0 left-0 right-0 z-50 bg-white">
         <div className="text-2xl font-bold text-[#8B4513] cursor-pointer">
           <img src="/new.png" alt="Seedrowz logo" className="h-9 object-contain cursor-pointer" />
         </div>
