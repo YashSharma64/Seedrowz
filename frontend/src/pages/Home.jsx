@@ -4,6 +4,10 @@ import { motion } from 'framer-motion';
 import PageTransition from '../components/PageTransition';
 import StartupSlider from '../components/StartupSlider';
 
+import Footer from '../components/Footer';
+
+// ... (existing imports)
+
 export default function Home() {
   const navigate = useNavigate();
   const [currentUser, setCurrentUser] = useState(null);
@@ -220,7 +224,7 @@ export default function Home() {
 
       <StartupSlider />
 
-      <section className="px-8 py-20 max-w-7xl mx-auto">
+      <section id="how-it-works" className="px-8 py-20 max-w-7xl mx-auto">
         <h2 className="text-3xl sm:text-5xl md:text-6xl font-normal text-gray-800 text-center sm:text-left mb-16 mx-auto w-fit">
           How Seedrowz works?
         </h2>
@@ -287,6 +291,51 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      <section id="about" className="w-full bg-white py-10 px-8 mt-5">
+        <div className="max-w-4xl mx-auto text-center space-y-10">
+          <h2 className="text-4xl sm:text-5xl font-normal text-orange-500 mb-15">
+            About Seedrowz
+          </h2>
+          
+          <p className="text-xl sm:text-2xl text-orange-900/80 font-medium leading-relaxed">
+            Seedrowz was built to solve a simple but uncomfortable problem:
+          </p>
+
+          <div className="space-y-8">
+            <p className="text-lg sm:text-xl text-orange-900/70 leading-relaxed font-light">
+              Most startup ideas are never truly questioned before time, money, and ambition are invested.
+            </p>
+
+            <p className="text-lg sm:text-xl text-orange-900/70 leading-relaxed font-light">
+              In a world full of noise, vanity metrics, and “founder culture,” we believe clarity matters more than hype.
+            </p>
+
+            <p className="text-lg sm:text-xl text-orange-900/70 leading-relaxed font-light">
+              Seedrowz is an AI-powered startup evaluation platform designed to help founders think like investors — before investors ever get involved. We analyze ideas across feasibility, market depth, scalability, competitive risk, and execution difficulty, and deliver an honest verdict: Pass, Needs Fix, or Risky.
+            </p>
+          </div>
+
+          <p className="text-xl sm:text-2xl text-orange-600 font-medium py-6">
+            No motivation. No sugarcoating. Just signal.
+          </p>
+
+          <p className="text-lg sm:text-xl text-orange-900/70 leading-relaxed font-light">
+            We’re building Seedrowz for early-stage founders, students, and builders who want to make informed decisions, not emotional ones — and who value truth over validation.
+          </p>
+
+          <div className="pt-12 space-y-2">
+            <p className="text-2xl sm:text-3xl text-orange-800 font-normal">
+              This is not about killing ideas.
+            </p>
+            <p className="text-2xl sm:text-3xl text-orange-800 font-normal">
+              It’s about helping the right ones survive.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <Footer />
     </div>
     </PageTransition>
   );

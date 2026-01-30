@@ -3,6 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import PageTransition from '../components/PageTransition';
 
+import Footer from '../components/Footer';
+
 export default function Dashboard() {
   const navigate = useNavigate();
   const [currentUser, setCurrentUser] = useState(null);
@@ -724,6 +726,8 @@ export default function Dashboard() {
           </div>
         </motion.form>
       </div>
+
+      <Footer />
     </div>
     </PageTransition>
   );
