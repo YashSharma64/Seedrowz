@@ -221,10 +221,71 @@ export default function Home() {
       <StartupSlider />
 
       <section className="px-8 py-20 max-w-7xl mx-auto">
-        <h2 className="text-3xl sm:text-5xl md:text-6xl font-normal text-gray-800 text-center sm:text-left">
+        <h2 className="text-3xl sm:text-5xl md:text-6xl font-normal text-gray-800 text-center sm:text-left mb-16 mx-auto w-fit">
           How Seedrowz works?
         </h2>
 
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          {/* Box 1 */}
+          <div className="bg-white rounded-md p-8 border border-orange-100 shadow-lg hover:shadow-xl transition-shadow flex flex-col h-full">
+            <div className="mb-6">
+              <span className="inline-block bg-orange-100 text-orange-600 font-bold px-4 py-1 rounded-lg text-sm mb-4">Step 1</span>
+              <h3 className="text-2xl font-bold text-gray-800 mb-2">Share Your Idea</h3>
+              <p className="text-lg text-gray-600 font-medium">Tell us what you’re building.</p>
+            </div>
+            <div className="text-gray-600 leading-relaxed space-y-4 flex-grow">
+              <p>
+                You submit your startup idea by answering a focused set of questions:
+                problem, solution, target market, business model, team background, and traction (if any).
+              </p>
+              <p className="font-medium text-gray-800 pt-2 border-t border-gray-100">
+                No pitch decks. No buzzwords. Just clarity.
+              </p>
+            </div>
+          </div>
+
+          {/* Box 2 */}
+          <div className="bg-white rounded-md p-8 border border-orange-100 shadow-lg hover:shadow-xl transition-shadow flex flex-col h-full relative overflow-hidden">
+            <div className="absolute top-0 right-0 w-24 h-24 bg-orange-50 rounded-bl-full -mr-4 -mt-4 opacity-50"></div>
+            <div className="mb-6 relative z-10">
+              <span className="inline-block bg-orange-100 text-orange-600 font-bold px-4 py-1 rounded-lg text-sm mb-4">Step 2</span>
+              <h3 className="text-2xl font-bold text-gray-800 mb-2">AI Reality Check</h3>
+              <p className="text-lg text-gray-600 font-medium">We analyze it like an investor would.</p>
+            </div>
+            <div className="text-gray-600 leading-relaxed space-y-4 flex-grow relative z-10">
+              <p>
+                Seedrowz evaluates your idea across core dimensions:
+                feasibility, market potential, competition, scalability, and execution difficulty — using AI and market intelligence.
+              </p>
+              <div className="pt-2 border-t border-gray-100">
+                <p className="font-medium text-gray-800 mb-2">You receive a clear verdict:</p>
+                <div className="flex gap-2 text-sm font-bold">
+                  <span className="text-green-600 bg-green-50 px-2 py-1 rounded">Pass</span>
+                  <span className="text-yellow-600 bg-yellow-50 px-2 py-1 rounded">Needs Fix</span>
+                  <span className="text-red-600 bg-red-50 px-2 py-1 rounded">Risky</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Box 3 */}
+          <div className="bg-white rounded-md p-8 border border-orange-100 shadow-lg hover:shadow-xl transition-shadow flex flex-col h-full">
+            <div className="mb-6">
+              <span className="inline-block bg-orange-100 text-orange-600 font-bold px-4 py-1 rounded-lg text-sm mb-4">Step 3</span>
+              <h3 className="text-2xl font-bold text-gray-800 mb-2">Actionable Direction</h3>
+              <p className="text-lg text-gray-600 font-medium">Know exactly what to do next.</p>
+            </div>
+            <div className="text-gray-600 leading-relaxed space-y-4 flex-grow">
+              <p>
+                Get a practical roadmap tailored to your idea:
+                next execution steps, suggested tech stack, funding stage guidance, and relevant investor insights.
+              </p>
+              <p className="font-medium text-gray-800 pt-2 border-t border-gray-100">
+                Move forward with conviction, not confusion.
+              </p>
+            </div>
+          </div>
+        </div>
       </section>
     </div>
     </PageTransition>
