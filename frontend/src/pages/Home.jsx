@@ -78,6 +78,38 @@ export default function Home() {
             )}
           </div>
         </div>
+
+        {/* Mobile Menu Button - Visible only on mobile */}
+        <div className="md:hidden flex items-center">
+          {currentUser ? (
+            <button 
+              onClick={() => navigate('/dashboard')}
+              className="flex items-center gap-2 bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors shadow-md border border-orange-500"
+            >
+              Dashboard
+            </button>
+          ) : (
+            <button 
+              onClick={() => navigate('/login')}
+              className="flex items-center gap-2 bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors shadow-md border border-orange-500"
+            >
+              <svg 
+                xmlns="http://www.w3.org/2000/svg" 
+                className="h-4 w-4" 
+                viewBox="0 0 24 24" 
+                fill="none" 
+                stroke="currentColor" 
+                strokeWidth="2" 
+                strokeLinecap="round" 
+                strokeLinejoin="round"
+              >
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                <circle cx="12" cy="7" r="4" />
+              </svg>
+              Login
+            </button>
+          )}
+        </div>
       </nav>
 
 
