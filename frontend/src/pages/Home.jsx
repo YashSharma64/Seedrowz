@@ -19,6 +19,12 @@ export default function Home() {
     }
   }, []);
 
+  const handleLogout = () => {
+    localStorage.removeItem('user');
+    setCurrentUser(null);
+    navigate('/');
+  };
+
   return (
     <PageTransition>
     <div className="min-h-screen bg-white flex flex-col justify-center items-center w-full">
@@ -53,6 +59,15 @@ export default function Home() {
                 >
                   Go to Dashboard
                 </button>
+                <button
+                  onClick={handleLogout}
+                  className="hidden md:flex items-center gap-2 text-gray-500 hover:text-red-500 transition-colors ml-2"
+                  title="Logout"
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+                  </svg>
+                </button>
               </>
             )}
             {!currentUser && (
@@ -80,14 +95,25 @@ export default function Home() {
         </div>
 
         {/* Mobile Menu Button - Visible only on mobile */}
-        <div className="md:hidden flex items-center">
+        <div className="md:hidden flex items-center gap-3">
           {currentUser ? (
-            <button 
-              onClick={() => navigate('/dashboard')}
-              className="flex items-center gap-2 bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors shadow-md border border-orange-500"
-            >
-              Dashboard
-            </button>
+            <>
+              <button 
+                onClick={() => navigate('/dashboard')}
+                className="flex items-center gap-2 bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors shadow-md border border-orange-500"
+              >
+                Dashboard
+              </button>
+              <button
+                onClick={handleLogout}
+                className="flex items-center justify-center p-2 text-gray-500 hover:text-red-500 transition-colors rounded-full hover:bg-gray-100"
+                title="Logout"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+                </svg>
+              </button>
+            </>
           ) : (
             <button 
               onClick={() => navigate('/login')}
