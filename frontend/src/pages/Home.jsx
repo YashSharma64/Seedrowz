@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import PageTransition from '../components/PageTransition';
+import StartupSlider from '../components/StartupSlider';
 
 export default function Home() {
   const navigate = useNavigate();
@@ -28,7 +29,7 @@ export default function Home() {
         
         <div className="hidden md:flex items-center gap-12">
           <a 
-            href="#top-startups" 
+            href="#brand-showcase" 
             className="text-gray-700 hover:text-gray-900 text-base font-medium transition-colors"
           >
             Top Startups
@@ -156,6 +157,10 @@ export default function Home() {
         </div>
       </section>
         
+
+
+
+      <StartupSlider />
 
       <section className="px-8 py-20 max-w-7xl mx-auto">
         <h2 className="text-3xl sm:text-5xl md:text-6xl font-normal text-gray-800 text-center sm:text-left">
