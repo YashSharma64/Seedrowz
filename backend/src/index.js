@@ -15,14 +15,11 @@ app.use(cors({
 }));
 app.use(express.json());
 
-// health
 app.get("/", (req, res) => res.send("Seedrowz backend running"));
 
-// mount routes
 app.use("/api/users", userRoutes);
 app.use("/api", evaluateRoutes);
 
-// basic error handler (optional)
 app.use((err, req, res, next) => {
   console.error(err.stack);
   res.status(500).send("Something broke!");

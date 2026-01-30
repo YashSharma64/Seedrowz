@@ -1,5 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { motion } from 'framer-motion';
+import PageTransition from '../components/PageTransition';
 
 export default function Dashboard() {
   const navigate = useNavigate();
@@ -86,8 +88,6 @@ export default function Dashboard() {
     'vision2to5Years',
   ];
 
-  // Handle Enter key to move to next field
-  // For textareas: Shift+Enter = new line, Enter = next field
   const handleKeyDown = (e, currentField) => {
     if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault();
@@ -99,7 +99,6 @@ export default function Dashboard() {
     }
   };
 
-  // Close dropdown when clicking outside
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
@@ -143,7 +142,7 @@ export default function Dashboard() {
         pitch: formData.oneLinePitch,
         problem: formData.problemStatement,
         solution: formData.proposedSolution,
-        marketSize: '', // Not in form, it can be added later agar jrurat padi to
+        marketSize: '', 
         targetAudience: formData.targetAudience,
         businessModel: formData.businessModel,
         competition: formData.competition,
@@ -156,11 +155,7 @@ export default function Dashboard() {
         vision: formData.vision2to5Years,
       };
 
-      // Get API base URL from environment
-      const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000';
-      
-      console.log('Submitting to:', `${API_BASE_URL}/api/evaluate-idea`);
-      console.log('Request body:', requestBody);
+      const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || '';
       
       const response = await fetch(`${API_BASE_URL}/api/evaluate-idea`, {
         method: 'POST',
@@ -171,23 +166,9 @@ export default function Dashboard() {
         body: JSON.stringify(requestBody),
       });
 
-      console.log('Response status:', response.status);
-      console.log('Response ok:', response.ok);
-
-      if (!response.ok) {
-        const errorData = await response.json().catch(() => ({ error: response.statusText }));
-        throw new Error(`API error: ${response.status} - ${errorData.error || response.statusText}`);
-      }
-
-      const data = await response.json();
-      console.log('API Response:', data);
-      
-      // Handle success response
       if (data.success && data.resultId) {
-        // Store evaluation result in localStorage or state management
-        // Navigate to results page with resultId
         navigate(`/results/${data.resultId}`, { 
-          state: { 
+          state: {  
             evaluation: data.evaluation,
             resultId: data.resultId 
           } 
@@ -217,6 +198,7 @@ export default function Dashboard() {
   };
 
   return (
+    <PageTransition>
     <div className="min-h-screen bg-[#F4EFEA]">
       
       <nav className="flex items-center justify-between px-4 sm:px-6 lg:px-8 py-4 sm:py-5 max-w-7xl mx-auto w-full border-b border-gray-200 fixed top-0 left-0 right-0 z-50 bg-[#F4EFEA]">
@@ -276,17 +258,32 @@ export default function Dashboard() {
       <div className="pt-28 pb-20 px-4 sm:px-6 md:px-8 max-w-4xl mx-auto ">
         
         <div className="mb-10 sm:mb-12">
-          <h1 className="text-3xl sm:text-4xl md:text-5xl text-orange-500 hover:text-orange-300 mb-3 sm:mb-4 text-center mt-6 sm:mt-8">
+          <motion.h1 
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            className="text-3xl sm:text-4xl md:text-5xl text-orange-500 hover:text-orange-300 mb-3 sm:mb-4 text-center mt-6 sm:mt-8"
+          >
             Get an Honest AI Evaluation for Your Idea
-          </h1>
-          <p className="text-base sm:text-lg md:text-xl text-gray-700 text-center mt-6 sm:mt-8">
+          </motion.h1>
+          <motion.p 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="text-base sm:text-lg md:text-xl text-gray-700 text-center mt-6 sm:mt-8"
+          >
             Your First Step Into the Startup World
-          </p>
+          </motion.p>
         </div>
 
-        {/* Form */}
-        <form onSubmit={handleSubmit} className="space-y-12">
-
+        <motion.form  
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.4 }}
+          onSubmit={handleSubmit} 
+          className="space-y-12"
+        >
+          {/* ... existing form content ... */}
           <div className="space-y-6">
             <div>
               <label htmlFor="startupTitle" className="block text-base font-medium text-gray-700 mb-2">
@@ -302,7 +299,7 @@ export default function Dashboard() {
                 onKeyDown={(e) => handleKeyDown(e, 'startupTitle')}
                 placeholder="Your startup's name."
                 required
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent text-gray-900 placeholder-gray-400"
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent text-gray-900 placeholder-gray-400 transition-shadow duration-200"
               />
             </div>
 
@@ -320,7 +317,7 @@ export default function Dashboard() {
                 onKeyDown={(e) => handleKeyDown(e, 'oneLinePitch')}
                 placeholder="Summarize your idea in one sentence."
                 required
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent text-gray-900 placeholder-gray-400"
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent text-gray-900 placeholder-gray-400 transition-shadow duration-200"
               />
             </div>
           </div>
@@ -345,7 +342,7 @@ export default function Dashboard() {
                 placeholder="What exact problem are you solving? Why does it matter?"
                 rows="4"
                 required
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent text-gray-900 placeholder-gray-400 resize-y"
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent text-gray-900 placeholder-gray-400 resize-y transition-shadow duration-200"
               />
             </div>
 
@@ -363,7 +360,7 @@ export default function Dashboard() {
                 placeholder="How does your product solve the problem?"
                 rows="4"
                 required
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent text-gray-900 placeholder-gray-400 resize-y"
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent text-gray-900 placeholder-gray-400 resize-y transition-shadow duration-200"
               />
             </div>
           </div>
@@ -387,7 +384,7 @@ export default function Dashboard() {
                 onKeyDown={(e) => handleKeyDown(e, 'targetAudience')}
                 placeholder="Who will use your product? (eg. Students, founders, restaurants, SMBs)."
                 required
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent text-gray-900 placeholder-gray-400"
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent text-gray-900 placeholder-gray-400 transition-shadow duration-200"
               />
             </div>
           </div>
@@ -411,7 +408,7 @@ export default function Dashboard() {
                   onChange={handleChange}
                   placeholder="B2B, B2C, SaaS, Marketplace, Subscription"
                   required
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent text-gray-900 placeholder-gray-400 pr-32"
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent text-gray-900 placeholder-gray-400 pr-32 transition-shadow duration-200"
                   readOnly
                   onClick={() => setShowBusinessModelDropdown(!showBusinessModelDropdown)}
                 />
@@ -435,7 +432,12 @@ export default function Dashboard() {
                   </svg>
                 </button>
                 {showBusinessModelDropdown && (
-                  <div className="absolute z-10 w-full mt-1 bg-white border border-gray-300 rounded-lg shadow-lg">
+                  <motion.div 
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -10 }}
+                    className="absolute z-10 w-full mt-1 bg-white border border-gray-300 rounded-lg shadow-lg"
+                  >
                     {businessModelOptions.map((option) => (
                       <button
                         key={option}
@@ -449,7 +451,7 @@ export default function Dashboard() {
                         {option}
                       </button>
                     ))}
-                  </div>
+                  </motion.div>
                 )}
               </div>
             </div>
@@ -468,7 +470,7 @@ export default function Dashboard() {
                 onKeyDown={(e) => handleKeyDown(e, 'competition')}
                 placeholder="Existing competitors (optional). What makes you different?"
                 required
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent text-gray-900 placeholder-gray-400"
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent text-gray-900 placeholder-gray-400 transition-shadow duration-200"
               />
             </div>
           </div>
@@ -493,7 +495,7 @@ export default function Dashboard() {
                 onKeyDown={(e) => handleKeyDown(e, 'experience')}
                 placeholder="Work / Startup / Internship / Industry"
                 required
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent text-gray-900 placeholder-gray-400"
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent text-gray-900 placeholder-gray-400 transition-shadow duration-200"
               />
             </div>
 
@@ -511,7 +513,7 @@ export default function Dashboard() {
                 onKeyDown={(e) => handleKeyDown(e, 'qualification')}
                 placeholder="Degree, IIT/IIM/BITS/NIT, CA, MBA, BTech CSE, etc."
                 required
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent text-gray-900 placeholder-gray-400"
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent text-gray-900 placeholder-gray-400 transition-shadow duration-200"
               />
             </div>
 
@@ -529,7 +531,7 @@ export default function Dashboard() {
                 onKeyDown={(e) => handleKeyDown(e, 'skillsExpertise')}
                 placeholder="Tech, Business, Marketing, Finance, AI, Product, Sales, etc."
                 required
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent text-gray-900 placeholder-gray-400"
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent text-gray-900 placeholder-gray-400 transition-shadow duration-200"
               />
             </div>
 
@@ -547,12 +549,11 @@ export default function Dashboard() {
                 onKeyDown={(e) => handleKeyDown(e, 'founderRole')}
                 placeholder="Tech Founder / Business Founder / Solo Founder / Co-Founder"
                 required
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent text-gray-900 placeholder-gray-400"
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent text-gray-900 placeholder-gray-400 transition-shadow duration-200"
               />
             </div>
           </div>
 
-          {/* Traction (Optional) hai */}
           <div className="space-y-6">
             <h2 className="text-2xl md:text-3xl font-bold text-gray-800 mb-6">
               Traction (Optional)
@@ -571,7 +572,7 @@ export default function Dashboard() {
                 onChange={handleChange}
                 onKeyDown={(e) => handleKeyDown(e, 'usersWaitlist')}
                 placeholder="Ex: 120 signups, 10 beta testers"
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent text-gray-900 placeholder-gray-400"
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent text-gray-900 placeholder-gray-400 transition-shadow duration-200"
               />
             </div>
 
@@ -588,7 +589,7 @@ export default function Dashboard() {
                 onChange={handleChange}
                 onKeyDown={(e) => handleKeyDown(e, 'mvpPrototypeReady')}
                 placeholder="Yes/No"
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent text-gray-900 placeholder-gray-400"
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent text-gray-900 placeholder-gray-400 transition-shadow duration-200"
               />
             </div>
 
@@ -605,7 +606,7 @@ export default function Dashboard() {
                 onChange={handleChange}
                 onKeyDown={(e) => handleKeyDown(e, 'incubationMentorship')}
                 placeholder="Yes/Looking for it"
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent text-gray-900 placeholder-gray-400"
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent text-gray-900 placeholder-gray-400 transition-shadow duration-200"
               />
             </div>
           </div>
@@ -630,7 +631,7 @@ export default function Dashboard() {
                 onKeyDown={(e) => handleKeyDown(e, 'soloOrTeam')}
                 placeholder="Solo founder / Team-based"
                 required
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent text-gray-900 placeholder-gray-400"
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent text-gray-900 placeholder-gray-400 transition-shadow duration-200"
               />
             </div>
 
@@ -648,7 +649,7 @@ export default function Dashboard() {
                 onKeyDown={(e) => handleKeyDown(e, 'fullTimeCommitted')}
                 placeholder="Yes/Just Testing"
                 required
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent text-gray-900 placeholder-gray-400"
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent text-gray-900 placeholder-gray-400 transition-shadow duration-200"
               />
             </div>
 
@@ -666,14 +667,16 @@ export default function Dashboard() {
                 placeholder="Describe your long-term vision for the startup"
                 rows="4"
                 required
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent text-gray-900 placeholder-gray-400 resize-y"
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent text-gray-900 placeholder-gray-400 resize-y transition-shadow duration-200"
               />
             </div>
           </div>
 
   
           <div className="pt-6 space-y-4">
-            <button
+            <motion.button
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
               type="submit"
               disabled={isLoading}
               className={`flex justify-center items-center mx-auto w-full md:w-auto bg-orange-500 border border-orange-500 text-white px-10 py-4 rounded-lg text-lg font-medium transition-colors shadow-md ${
@@ -709,7 +712,7 @@ export default function Dashboard() {
               ) : (
                 'Get My Reality Check'
               )}
-            </button>
+            </motion.button>
             
             {isLoading && (
               <div className="text-center">
@@ -719,9 +722,10 @@ export default function Dashboard() {
               </div>
             )}
           </div>
-        </form>
+        </motion.form>
       </div>
     </div>
+    </PageTransition>
   );
 }
 

@@ -26,26 +26,16 @@ export default function Login() {
     setIsSubmitting(true);
 
     try {
-      const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000';
+      const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || '';
       const endpoint = isLogin ? '/api/users/login' : '/api/users/register';
 
       const body = isLogin
-        ? {
-            email: form.email,
-            password: form.password,
-          }
-        : {
-            name: form.username,
-            email: form.email,
-            password: form.password,
-            role: 'user',
-          };
+        ? { email: form.email, password: form.password }
+        : { name: form.username, email: form.email, password: form.password, role: 'user' };
 
       const response = await fetch(`${API_BASE_URL}${endpoint}`, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(body),
       });
 

@@ -1,5 +1,7 @@
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { useState, useEffect } from 'react';
+import { motion } from 'framer-motion';
+import PageTransition from '../components/PageTransition';
 
 export default function Result() {
   const location = useLocation();
@@ -9,15 +11,12 @@ export default function Result() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Get evaluation data from navigation state or fetch from API
     if (location.state?.evaluation) {
       setEvaluation(location.state.evaluation);
       setLoading(false);
     } else if (resultId) {
-      // Fetch evaluation from API if not in state
       fetchEvaluation(resultId);
     } else {
-      // No data available, redirect to dashboard
       navigate('/dashboard');
     }
   }, [resultId, location.state, navigate]);
@@ -30,7 +29,7 @@ export default function Result() {
         return;
       }
 
-      const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000';
+      const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || '';
       const response = await fetch(`${API_BASE_URL}/api/evaluation/${id}`, {
         headers: {
           'Authorization': `Bearer ${token}`
@@ -80,22 +79,14 @@ export default function Result() {
   }
 
   return (
+    <PageTransition>
     <div className="min-h-screen bg-[#F4EFEA]">
       {/* Nav  */}
       <nav className="flex items-center justify-between px-4 sm:px-6 lg:px-8 py-4 sm:py-5 max-w-7xl mx-auto w-full border-b border-gray-200 fixed top-0 left-0 right-0 z-50 bg-[#F4EFEA]">
-        {/* Logo */}
-        <div 
-          className="flex items-center cursor-pointer"
-          onClick={() => navigate('/')}
-        >
-          <img
-            src="/new.png"
-            alt="Seedrowz logo"
-            className="h-9 object-contain cursor-pointer"
-          />
+        <div className="flex items-center cursor-pointer" onClick={() => navigate('/')}>
+          <img src="/new.png" alt="Seedrowz logo" className="h-9 object-contain cursor-pointer" />
         </div>
         
-        {/* Nav Link */}
         <div className="hidden md:flex items-center gap-4 sm:gap-8 md:gap-12 text-sm sm:text-base">
           <a 
             href="#top-startups" 
@@ -110,7 +101,6 @@ export default function Result() {
             About Us
           </a>
           
-          {/* User Profile Icon */}
           <div className="flex items-center justify-center w-10 h-10 rounded-full bg-gray-200 cursor-pointer hover:bg-gray-300 transition-colors overflow-hidden">
             <img
               src="logonew.png"
@@ -123,20 +113,32 @@ export default function Result() {
 
       {/* Main Content */}
       <div className="pt-28 pb-20 px-4 sm:px-6 md:px-8 max-w-4xl mx-auto">
-        {/* Title Section */}
         <div className="mb-12 text-center">
-          <h1 className="text-4xl md:text-5xl font-normal text-orange-500 mb-4">
+          <motion.h1 
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            className="text-4xl md:text-5xl font-normal text-orange-500 mb-4"
+          >
             Your Startup Reality Check
-          </h1>
-          <p className="text-lg md:text-xl text-gray-700">
+          </motion.h1>
+          <motion.p 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="text-lg md:text-xl text-gray-700"
+          >
             Analyzing feasibility, scalability, market potential score using AI...
-          </p>
+          </motion.p>
         </div>
 
         <div className="bg-white rounded-lg border-2 border-orange-500 p-6 sm:p-8 shadow-lg">
-          {/* Verdict Section */}
           <div className="mb-8 text-center">
-            <div className={`inline-block px-6 py-3 rounded-full text-xl font-semibold ${
+            <motion.div 
+              initial={{ scale: 0.5, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              transition={{ type: "spring", stiffness: 260, damping: 20, delay: 0.4 }}
+              className={`inline-block px-6 py-3 rounded-full text-xl font-semibold ${
               evaluation.verdict?.includes('Pass') 
                 ? 'bg-green-100 text-green-800' 
                 : evaluation.verdict?.includes('Risky')
@@ -144,10 +146,9 @@ export default function Result() {
                 : 'bg-yellow-100 text-yellow-800'
             }`}>
               {evaluation.verdict || 'Evaluation Complete'}
-            </div>
+            </motion.div>
           </div>
 
-          {/* Summary */}
           {evaluation.summary && (
             <div className="mb-8">
               <h2 className="text-2xl font-bold text-gray-800 mb-4">Summary</h2>
@@ -155,48 +156,76 @@ export default function Result() {
             </div>
           )}
 
-          {/* Scores Grid */}
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6 mb-8">
-            <div className="bg-gray-50 p-4 rounded-lg">
+            <motion.div 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.6 }}
+              className="bg-gray-50 p-4 rounded-lg"
+            >
               <p className="text-sm text-gray-600 mb-2">Feasibility</p>
               <p className="text-3xl font-bold text-orange-500">{evaluation.feasibility || 0}%</p>
-            </div>
-            <div className="bg-gray-50 p-4 rounded-lg">
+            </motion.div>
+            <motion.div 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.7 }}
+              className="bg-gray-50 p-4 rounded-lg"
+            >
               <p className="text-sm text-gray-600 mb-2">Market Potential</p>
               <p className="text-3xl font-bold text-orange-500">{evaluation.marketPotential || 0}%</p>
-            </div>
-            <div className="bg-gray-50 p-4 rounded-lg">
+            </motion.div>
+            <motion.div 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.8 }}
+              className="bg-gray-50 p-4 rounded-lg"
+            >
               <p className="text-sm text-gray-600 mb-2">Competition</p>
               <p className="text-3xl font-bold text-orange-500">{evaluation.competition || 0}%</p>
-            </div>
-            <div className="bg-gray-50 p-4 rounded-lg">
+            </motion.div>
+            <motion.div 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.9 }}
+              className="bg-gray-50 p-4 rounded-lg"
+            >
               <p className="text-sm text-gray-600 mb-2">Scalability</p>
               <p className="text-3xl font-bold text-orange-500">{evaluation.scalability || 0}%</p>
-            </div>
-            <div className="bg-gray-50 p-4 rounded-lg">
+            </motion.div>
+            <motion.div 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 1.0 }}
+              className="bg-gray-50 p-4 rounded-lg"
+            >
               <p className="text-sm text-gray-600 mb-2">Execution Difficulty</p>
               <p className="text-3xl font-bold text-orange-500">{evaluation.executionDifficulty || 0}%</p>
-            </div>
+            </motion.div>
           </div>
 
-          {/* Next Steps */}
           {evaluation.nextSteps && evaluation.nextSteps.length > 0 && (
             <div className="mb-8">
               <h2 className="text-2xl font-bold text-gray-800 mb-4">Next Steps</h2>
               <ul className="space-y-3">
                 {evaluation.nextSteps.map((step, index) => (
-                  <li key={index} className="flex items-start gap-3">
+                  <motion.li 
+                    key={index}
+                    initial={{ opacity: 0, x: -10 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 0.4, delay: 1.1 + (index * 0.1) }}
+                    className="flex items-start gap-3"
+                  >
                     <span className="flex-shrink-0 w-6 h-6 bg-orange-500 text-white rounded-full flex items-center justify-center text-sm font-bold">
                       {index + 1}
                     </span>
                     <p className="text-gray-700 flex-1">{step}</p>
-                  </li>
+                  </motion.li>
                 ))}
               </ul>
             </div>
           )}
 
-          {/* Tech Stack */}
           {evaluation.techStack && (
             <div className="mb-8">
               <h2 className="text-2xl font-bold text-gray-800 mb-4">Recommended Tech Stack</h2>
@@ -204,7 +233,6 @@ export default function Result() {
             </div>
           )}
 
-          {/* Funding Stage */}
           {evaluation.fundingStage && (
             <div className="mb-8">
               <h2 className="text-2xl font-bold text-gray-800 mb-4">Recommended Funding Stage</h2>
@@ -212,7 +240,6 @@ export default function Result() {
             </div>
           )}
 
-          {/* Investor Matches */}
           {evaluation.investorMatches && evaluation.investorMatches.length > 0 && (
             <div className="mb-8">
               <h2 className="text-2xl font-bold text-gray-800 mb-4">Recommended Investors</h2>
@@ -248,6 +275,7 @@ export default function Result() {
         </div>
       </div>
     </div>
+    </PageTransition>
   );
 }
 
