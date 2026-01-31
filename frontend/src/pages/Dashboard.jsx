@@ -168,6 +168,8 @@ export default function Dashboard() {
         body: JSON.stringify(requestBody),
       });
 
+      const data = await response.json();
+
       if (data.success && data.resultId) {
         navigate(`/results/${data.resultId}`, { 
           state: {  
