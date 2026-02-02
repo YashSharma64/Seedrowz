@@ -6,7 +6,14 @@ import userRoutes from "./routes/userRoutes.js";
 import evaluateRoutes from "./routes/evaluateRoutes.js";
 import prisma from "./config/db.js";
 
+import path from "path";
+import { fileURLToPath } from "url";
+
 dotenv.config();
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
 const app = express();
 
 app.use(cors({
@@ -23,6 +30,13 @@ app.use("/api", evaluateRoutes);
 app.use((err, req, res, next) => {
   console.error(err.stack);
   res.status(500).send("Something broke!");
+});
+
+// Serve static files from the frontend build directory
+app.use(express.static(path.join(__dirname, "../../frontend/dist")));
+
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "../../frontend/dist/index.html"));
 });
 
 const PORT = process.env.PORT || 5000;
