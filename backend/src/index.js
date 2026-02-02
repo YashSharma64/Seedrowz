@@ -35,7 +35,7 @@ app.use((err, req, res, next) => {
 // Serve static files from the frontend build directory
 app.use(express.static(path.join(__dirname, "../../frontend/dist")));
 
-app.get("/*", (req, res) => {
+app.get(/.*/, (req, res) => {
   res.sendFile(path.join(__dirname, "../../frontend/dist/index.html"));
 });
 
